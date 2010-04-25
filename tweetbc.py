@@ -24,9 +24,10 @@ class tweetBC(object):
         dms = api.direct_messages(since_id=last_dm_id)
 
         for m in dms:
-            p = subprocess.Popen("echo '%s' | bc -l" % m.text, shell=True, stdout=subprocess.PIPE) # NOTE: insecure
-            answer = p.stdout.readline().strip()
-            if answer.strip():
+            p = subprocess.Popen("bc -l", shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+            out, err = p.communicate(m.txt + "\n")
+            answer = out.strip()
+            if answer:
                 print "@%s %s = %s" % (m.sender_screen_name, m.text, answer)
             
                 try:
