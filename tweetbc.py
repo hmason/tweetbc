@@ -25,7 +25,7 @@ class tweetBC(object):
 
         for m in dms:
             p = subprocess.Popen("bc -l", shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-            out, err = p.communicate(m.txt + "\n")
+            out, err = p.communicate(m.text + "\n")
             answer = out.strip()
             if answer:
                 print "@%s %s = %s" % (m.sender_screen_name, m.text, answer)
